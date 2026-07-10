@@ -7,6 +7,6 @@ services:
       - 3000:3000
     environment:
       DATA_DIR: /opt/dockhand
-     volumes:
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/dockhand:/opt/dockhand
