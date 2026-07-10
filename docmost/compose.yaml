@@ -14,8 +14,6 @@ services:
     depends_on:
       - postgres
       - redis
-    networks:
-      - docmost_network
 
   postgres:
     image: postgres:16-alpine
@@ -26,8 +24,6 @@ services:
       - POSTGRES_PASSWORD=docmost
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      - docmost_network
 
   redis:
     image: redis:7-alpine
@@ -35,14 +31,8 @@ services:
     command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
     volumes:
       - redis-data:/data
-    networks:
-      - docmost_network
 
 volumes:
   docmost-data:
   postgres-data:
   redis-data:
-
-networks:
-  docmost_network:
-    driver: bridge
