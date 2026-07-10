@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mysql
+    restart: unless-stopped
+    command: --mysql-native-password=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # 루트 비밀번호 설정
+      # MYSQL_DATABASE: mydatabase          # 초기 생성할 DB
+      # MYSQL_USER: myuser                  # 사용자
+      # MYSQL_PASSWORD: mypassword          # 사용자 비밀번호
+    ports:
+      - "3306:3306"                       # 호스트:컨테이너 포트 맵핑
+    volumes:
+      - mysql_data:/var/lib/mysql         # 데이터 영속화
+
+volumes:
+  mysql_data:                             # 볼륨 설정
