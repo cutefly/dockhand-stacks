@@ -36,7 +36,7 @@ services:
     shm_size: 512mb
     volumes:
     - authentik_data:/data
-    - custom_templates:/templates
+    - ./custom_templates:/templates
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5.4}
     container_name: authentik_worker
@@ -56,5 +56,10 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - worker_data:/data
-    - custom-templates:/templates
+    - ./custom_templates:/templates
     - ./certs:/certs
+
+volumes:
+  postgres_data:
+  authentik_data:
+  worker_data:

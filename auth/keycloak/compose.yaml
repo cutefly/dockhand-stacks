@@ -30,3 +30,6 @@ services:
    restart: unless-stopped
    depends_on:
      - postgres
+
+volumes:
+  postgres_data:                             # 볼륨 설정
