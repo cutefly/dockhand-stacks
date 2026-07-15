@@ -12,7 +12,7 @@ services:
     #   start_period: 20s
     #   test:
     #   - CMD-SHELL
-    #   - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+    #   - pg_isready -d $${POSTGRES_DB:-authentik}} -U $${POSTGRES_USER:-authentik}}
     #   timeout: 5s
     volumes:
     - postgres_data:/var/lib/postgresql/data
@@ -20,9 +20,6 @@ services:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5.4}
     container_name: authentik
     command: server
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
       AUTHENTIK_POSTGRESQL__HOST: postgres
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
@@ -37,13 +34,13 @@ services:
     volumes:
     - authentik_data:/data
     - ./custom_templates:/templates
+    depends_on:
+      - postgres
+
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5.4}
     container_name: authentik_worker
     command: worker
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
       AUTHENTIK_POSTGRESQL__HOST: postgres
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
@@ -58,6 +55,8 @@ services:
     - worker_data:/data
     - ./custom_templates:/templates
     - ./certs:/certs
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:
