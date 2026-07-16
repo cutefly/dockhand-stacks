@@ -24,7 +24,6 @@ services:
           {
             name: "openid_connect",
             label: "Keycloak SSO", # 로그인 화면에 표시될 버튼 이름
-            icon: "https://www.keycloak.org/resources/images/keycloak_logo_480x135.png", # 버튼 아이콘 (선택사항)
             args: {
               name: "openid_connect",
               scope: ["openid", "profile", "email"],
