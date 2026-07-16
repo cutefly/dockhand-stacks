@@ -11,6 +11,36 @@ services:
         nginx['listen_port'] = 80
         nginx['listen_https'] = false
         nginx['redirect_http_to_https'] = false
+        
+        # 1. 옴니오스(OmniAuth) 활성화 및 설정
+        gitlab_rails['omniauth_enabled'] = true
+        gitlab_rails['omniauth_allow_single_sign_on'] = ['openid_connect']
+        gitlab_rails['omniauth_block_auto_created_users'] = false # 최초 로그인 시 계정 자동 생성 허용
+        gitlab_rails['omniauth_auto_link_saml_user'] = false
+        gitlab_rails['omniauth_auto_link_openid_connect_user'] = true # 이메일이 일치하면 기존 GitLab 계정과 자동 연동
+        
+        # 2. Keycloak OIDC 프로바이더 등록
+        gitlab_rails['omniauth_providers'] = [
+          {
+            name: "openid_connect",
+            label: "Keycloak SSO", # 로그인 화면에 표시될 버튼 이름
+            icon: "https://www.keycloak.org/resources/images/keycloak_logo_480x135.png", # 버튼 아이콘 (선택사항)
+            args: {
+              name: "openid_connect",
+              scope: ["openid", "profile", "email"],
+              response_type: "code",
+              issuer: "https://keycloak.club012.com/realms/devops", # 본인의 Keycloak Realm URL 주소
+              client_auth_method: "query",
+              discovery: true,
+              uid_field: "preferred_username", # GitLab 계정 ID로 매핑할 필드
+              client_options: {
+                identifier: "gitlab", # Keycloak에서 만든 Client ID
+                secret: "${KEYCLOAK_CLIENT_SECRET}", # Keycloak Credentials 탭의 Client Secret 값
+                redirect_uri: "https://gitlab.club012.com/users/auth/openid_connect/callback"
+              }
+            }
+          }
+        ]
     ports:
       - '80:80'
       - '443:443'
