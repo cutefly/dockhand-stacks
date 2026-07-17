@@ -7,5 +7,5 @@ services:
       - 8082:8082
       - 8083:8083
     volumes:
-      - nexus-data:/nexus-data
+      - ./volumes/nexus:/nexus-data
     restart: unless-stopped
