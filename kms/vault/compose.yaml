@@ -14,3 +14,7 @@ services:
     cap_add:
       - IPC_LOCK
     command: vault server -config=/vault/config/vault.hcl
+
+volumes:
+  vault_data:
+  vault_logs:
