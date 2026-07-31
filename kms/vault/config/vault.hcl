@@ -1,13 +1,14 @@
 # ./vault/config/vault.hcl
-storage "file" {
-  path        = "/vault/data"
-}
+ui = true
+disable_mlock = true
 
 listener "tcp" {
   address     = "0.0.0.0:8200"
-  tls_disable = "true" # Set to "false" and provide certs for production use
+  tls_disable = true
 }
 
-api_addr      = "http://127.0.0.1:8200"
+storage "file" {
+  path = "/vault/data"
+}
 
-ui            = true
+api_addr = "http://unseal-vault:8200"
