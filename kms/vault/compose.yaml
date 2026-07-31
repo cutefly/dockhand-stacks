@@ -1,6 +1,6 @@
 services:
   vault:
-    image: hashicorp/vault:latest
+    image: hashicorp/vault:2.0
     container_name: vault-server
     restart: unless-stopped
     cap_add:

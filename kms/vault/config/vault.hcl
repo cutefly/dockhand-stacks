@@ -11,4 +11,4 @@ storage "file" {
   path = "/vault/data"
 }
 
-api_addr = "http://unseal-vault:8200"
+api_addr = "http://127.0.0.1:8200"
