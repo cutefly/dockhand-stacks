@@ -46,7 +46,7 @@ vault write auth/oidc/role/default \
 bound_audiences="vault" \
 allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
 allowed_redirect_uris="http://localhost:8250/oidc/callback" \
-user_claim="sub" \
+user_claim="preferred_username" \
 policies=default-policy
 
 vault read auth/oidc/role/default
@@ -55,7 +55,7 @@ vault write auth/oidc/role/manager \
 bound_audiences="vault" \
 allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
 allowed_redirect_uris="http://localhost:8250/oidc/callback" \
-user_claim="sub" \
+user_claim="preferred_username" \
 policies=secret-manager
 
 vault read auth/oidc/role/manager
@@ -64,7 +64,7 @@ vault write auth/oidc/role/admin \
 bound_audiences="vault" \
 allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
 allowed_redirect_uris="http://localhost:8250/oidc/callback" \
-user_claim="sub" \
+user_claim="preferred_username" \
 policies=secret-admin
 
 vault read auth/oidc/role/admin
@@ -76,12 +76,12 @@ vault login -method=oidc role=default
 
 ### group mapping
 
-```
+```bash
 vault write auth/oidc/role/default \
 bound_audiences="vault" \
-allowed_redirect_uris="<https://vault.club012.com/ui/vault/auth/oidc/oidc/callback>" \
-allowed_redirect_uris="<http://localhost:8250/oidc/callback>" \
-user_claim="sub" \
+allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
+allowed_redirect_uris="http://localhost:8250/oidc/callback" \
+user_claim="preferred_username" \
 groups_claim="groups" \
 policies=default-policy
 
@@ -89,19 +89,55 @@ vault read auth/oidc/role/default
 
 vault write auth/oidc/role/manager \
 bound_audiences="vault" \
-allowed_redirect_uris="<https://vault.club012.com/ui/vault/auth/oidc/oidc/callback>" \
-allowed_redirect_uris="<http://localhost:8250/oidc/callback>" \
-user_claim="sub" \
+allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
+allowed_redirect_uris="http://localhost:8250/oidc/callback" \
+user_claim="preferred_username" \
+groups_claim="groups" \
 policies=default-policy
 
 vault read auth/oidc/role/manager
 
 vault write auth/oidc/role/admin \
 bound_audiences="vault" \
-allowed_redirect_uris="<https://vault.club012.com/ui/vault/auth/oidc/oidc/callback>" \
-allowed_redirect_uris="<http://localhost:8250/oidc/callback>" \
-user_claim="sub" \
+allowed_redirect_uris="https://vault.club012.com/ui/vault/auth/oidc/oidc/callback" \
+allowed_redirect_uris="http://localhost:8250/oidc/callback" \
+user_claim="preferred_username" \
+groups_claim="groups" \
 policies=default-policy
 
 vault read auth/oidc/role/admin
+```
+
+```bash
+# create vault groups
+vault write identity/group \
+    name="secret-admin" \
+    policies="secret-admin" \
+    type="external" \
+    metadata=organization="admin"
+# group id : eaac9985-83b6-ce8a-9c3d-50140d585f4b
+export ADMIN_GROUP_ID=eaac9985-83b6-ce8a-9c3d-50140d585f4b
+
+vault write identity/group \
+    name="secret-manager" \
+    policies="secret-manager" \
+    type="external" \
+    metadata=organization="manager"
+# grup id : aa965737-4ec6-557c-0254-c49f72bd0c37
+export MANAGER_GROUP_ID=aa965737-4ec6-557c-0254-c49f72bd0c37
+
+# Get AccessorId of OIDC auth
+accessorId=$(vault auth list | grep oidc | awk '{print $3}')
+# accessorId : auth_oidc_1f25907e
+
+# map keycloak groups to vault groups
+vault write identity/group-alias \
+    name="jenkins-admin" \
+    mount_accessor="$accessorId" \
+    canonical_id="${ADMIN_GROUP_ID}"
+
+vault write identity/group-alias \
+    name="jenkins-manager" \
+    mount_accessor="$accessorId" \
+    canonical_id="${MANAGER_GROUP_ID}"
 ```
