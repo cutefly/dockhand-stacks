@@ -1,20 +1,38 @@
 services:
   openldap:
-    # image: osixia/openldap:1.1.7
     image: osixia/openldap:1.5.0
     container_name: openldap
     restart: unless-stopped
+    # 1. 쉘 스크립트 파싱 오류 방지를 위해 모든 값의 따옴표(")를 제거했습니다.
     environment:
-      - LDAP_ORGANISATION="Club012 Com"
-      - LDAP_DOMAIN="club012.com"
-      - LDAP_ADMIN_PASSWORD="admin"
+      - LDAP_ORGANISATION=Club012 Com
+      - LDAP_DOMAIN=club012.com
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD:-admin}
+      # 2. TLS/SSL 통신 강제 여부 (기본값 false, 필요 시 true 변경)
+      - LDAP_TLS=false
+      # 3. 컨테이너 내부 타임존을 호스트와 동기화하여 로그 시간 일치
+      - TZ=Asia/Seoul
     volumes:
       - ldap-data:/var/lib/ldap
       - ldap-conf:/etc/ldap/slapd.d 
     ports:
       - 389:389
+      - 636:636 # LDAPS (보안 연결) 대비용 포트 개방
+
+  # 4. 웹 UI 관리 도구 추가 (브라우저에서 LDAP 데이터 관리 가능)
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: phpldapadmin
+    restart: unless-stopped
+    environment:
+      - PHPLDAPADMIN_HTTPS=false
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - TZ=Asia/Seoul
+    ports:
+      - 8081:80 # 호스트의 8080 포트로 접속
+    depends_on:
+      - openldap
 
 volumes:
   ldap-data:
   ldap-conf:
-
