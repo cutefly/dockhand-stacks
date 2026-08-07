@@ -7,7 +7,7 @@ services:
     environment:
       - LDAP_ORGANISATION="Club012 Com"
       - LDAP_DOMAIN="club012.com"
-      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD:-admin}
+      - LDAP_ADMIN_PASSWORD="admin"
     volumes:
       - ldap-data:/var/lib/ldap
       - ldap-conf:/etc/ldap/slapd.d 
