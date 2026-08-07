@@ -1,21 +1,19 @@
-# https://github.com/osixia/container-openldap/blob/develop/README.md#-environment-variables
 services:
   openldap:
-    image: osixia/openldap
+    image: osixia/openldap:1.1.7
     container_name: openldap
     restart: unless-stopped
-    volumes:
-      - openldap-conf:/etc/openldap/slapd.d
-      - openldap-data:/var/lib/openldap/openldap-data
-      - openldap-backups:/var/lib/openldap/openldap-backups
-    ports:
-      - "389:3890"
-      - "636:6360"
     environment:
-      OPENLDAP_BOOTSTRAP_ORGANIZATION: "Club012 Com"
-      OPENLDAP_BOOTSTRAP_SUFFIX: "dc=club012,dc=com"
+      - LDAP_ORGANISATION="Club012 Com"
+      - LDAP_DOMAIN="club012.com"
+      - LDAP_ADMIN_PASSWORD="${LDAP_ADMIN_PASSWORD:-admin}"
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-conf:/etc/ldap/slapd.d 
+    ports:
+      - 389:389
 
 volumes:
-  openldap-conf:
-  openldap-data:
-  openldap-backups:
+  ldap-data:
+  ldap-conf:
+
