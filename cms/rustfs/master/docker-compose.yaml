@@ -9,9 +9,9 @@ services:
       - "9001:9001"   # Console / Management Port
     environment:
       - RUSTFS_ROOT_USER=admin
-      - RUSTFS_ROOT_PASSWORD=StrongAdminPassword123!
+      - RUSTFS_ROOT_PASSWORD=${RUSTFS_ROOT_PASSWORD}
       # 저장 시 암호화(SSE) Master Key 설정 (32byte Base64 또는 Hex)
-      - RUSTFS_KMS_MASTER_KEY=MySecretEncryptionKey32BytesLong!
+      - RUSTFS_KMS_MASTER_KEY=${RUSTFS_KMS_MASTER_KEY}
       - RUSTFS_SSE_AUTO_ENCRYPT=true
     volumes:
       - ./data:/data

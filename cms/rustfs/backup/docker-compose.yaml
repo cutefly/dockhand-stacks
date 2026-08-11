@@ -9,9 +9,9 @@ services:
       - "9001:9001"
     environment:
       - RUSTFS_ROOT_USER=admin
-      - RUSTFS_ROOT_PASSWORD=StrongAdminPassword123!
+      - RUSTFS_ROOT_PASSWORD=${RUSTFS_ROOT_PASSWORD}
       # Master와 동일한 암호화 키를 적용해야 복원 및 읽기가 가능합니다.
-      - RUSTFS_KMS_MASTER_KEY=MySecretEncryptionKey32BytesLong!
+      - RUSTFS_KMS_MASTER_KEY=${RUSTFS_KMS_MASTER_KEY}
       - RUSTFS_SSE_AUTO_ENCRYPT=true
     volumes:
       - ./data:/data
