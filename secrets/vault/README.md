@@ -19,6 +19,13 @@ vault secrets enable -path=secret kv
 vault secrets tune -description="key/value store" secret
 
 vault auth enable oidc
+vault auth tune -description="oidc based credentials" oidc
+
+vault write auth/oidc/config \
+         oidc_discovery_url="https://keycloak.club012.com/realms/devops" \
+         oidc_client_id="vault" \
+         oidc_client_secret="$AUTH0_CLIENT_SECRET" \
+         default_role="default"
 vault read auth/oidc/config
 
 # default-policy
