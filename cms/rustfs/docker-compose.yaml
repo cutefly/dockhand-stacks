@@ -15,6 +15,7 @@ services:
       - RUSTFS_SSE_AUTO_ENCRYPT=true
     volumes:
       - ./data:/data
+      - ./logs:/logs
       - ./config:/etc/rustfs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]

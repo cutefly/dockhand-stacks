@@ -1,0 +1,14 @@
+{
+  "Rules": [
+    {
+      "ID": "delete-after-1825-days",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": ""
+      },
+      "Expiration": {
+        "Days": 1825
+      }
+    }
+  ]
+}
