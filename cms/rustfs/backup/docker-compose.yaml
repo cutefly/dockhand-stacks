@@ -1,0 +1,41 @@
+# docker compose up -d
+services:
+  rustfs-backup:
+    image: rustfs/rustfs:latest
+    container_name: rustfs-backup
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - RUSTFS_ROOT_USER=admin
+      - RUSTFS_ROOT_PASSWORD=StrongAdminPassword123!
+      # Master와 동일한 암호화 키를 적용해야 복원 및 읽기가 가능합니다.
+      - RUSTFS_KMS_MASTER_KEY=MySecretEncryptionKey32BytesLong!
+      - RUSTFS_SSE_AUTO_ENCRYPT=true
+    volumes:
+      - ./data:/data
+      - ./config:/etc/rustfs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # 실시간 동기화를 수행하는 미러링 컨테이너 (Backup 서버에서 실행 권장)
+  rustfs-sync:
+    image: minio/mc:latest
+    container_name: rustfs-sync
+    restart: always
+    depends_on:
+      - rustfs-backup
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set master http://192.168.1.10:9000 admin StrongAdminPassword123! && \
+            mc alias set backup http://localhost:9000 admin StrongAdminPassword123!; do
+        echo 'Waiting for servers to start...'
+        sleep 5
+      done;
+      echo 'Starting real-time synchronization...';
+      mc mirror --watch --remove --overwrite master/ my-bucket/ backup/ my-bucket/
+      "

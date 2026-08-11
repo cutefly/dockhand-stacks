@@ -1,0 +1,23 @@
+# docker compose up -d
+services:
+  rustfs-master:
+    image: rustfs/rustfs:latest # 사용 중인 공식/커스텀 rustfs 이미지 지정
+    container_name: rustfs-master
+    restart: always
+    ports:
+      - "9000:9000"   # API Port
+      - "9001:9001"   # Console / Management Port
+    environment:
+      - RUSTFS_ROOT_USER=admin
+      - RUSTFS_ROOT_PASSWORD=StrongAdminPassword123!
+      # 저장 시 암호화(SSE) Master Key 설정 (32byte Base64 또는 Hex)
+      - RUSTFS_KMS_MASTER_KEY=MySecretEncryptionKey32BytesLong!
+      - RUSTFS_SSE_AUTO_ENCRYPT=true
+    volumes:
+      - ./data:/data
+      - ./config:/etc/rustfs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
