@@ -12,6 +12,7 @@ services:
       - RUSTFS_ROOT_PASSWORD=${RUSTFS_ROOT_PASSWORD}
       # 저장 시 암호화(SSE) Master Key 설정 (32byte Base64 또는 Hex)
       - RUSTFS_KMS_MASTER_KEY=${RUSTFS_KMS_MASTER_KEY}
+      - RUSTFS_SSE_S3_MASTER_KEY=${RUSTFS_SSE_S3_MASTER_KEY}
       - RUSTFS_SSE_AUTO_ENCRYPT=true
     volumes:
       - ./data:/data
