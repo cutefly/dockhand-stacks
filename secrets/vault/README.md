@@ -119,7 +119,7 @@ vault read auth/oidc/role/admin
 # create vault groups
 vault write identity/group \
     name="secret-admin" \
-    policies="secret-admin" \
+    policies="secret-admin,transit-admin" \
     type="external" \
     metadata=organization="admin"
 # group id : eaac9985-83b6-ce8a-9c3d-50140d585f4b
@@ -127,7 +127,7 @@ export ADMIN_GROUP_ID=eaac9985-83b6-ce8a-9c3d-50140d585f4b
 
 vault write identity/group \
     name="secret-manager" \
-    policies="secret-manager" \
+    policies="secret-manager,transit-manager" \
     type="external" \
     metadata=organization="manager"
 # grup id : aa965737-4ec6-557c-0254-c49f72bd0c37
