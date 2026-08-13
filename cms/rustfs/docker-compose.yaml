@@ -14,6 +14,14 @@ services:
       - RUSTFS_KMS_MASTER_KEY=${RUSTFS_KMS_MASTER_KEY}
       - RUSTFS_SSE_S3_MASTER_KEY=${RUSTFS_SSE_S3_MASTER_KEY}
       - RUSTFS_SSE_AUTO_ENCRYPT=true
+      # Configure Vault Transit
+      - RUSTFS_KMS_ENABLE=true
+      - RUSTFS_KMS_BACKEND=vault-transit
+      - RUSTFS_KMS_VAULT_ADDRESS=${VAULT_ADDR}
+      - RUSTFS_KMS_VAULT_TOKEN=${VAULT_TOKEN}
+      - RUSTFS_KMS_VAULT_MOUNT_PATH=transit
+      - RUSTFS_KMS_DEFAULT_KEY_ID=${RUSTFS_KMS_DEFAULT_KEY_ID}
+
     volumes:
       - ./data:/data
       - ./logs:/logs
