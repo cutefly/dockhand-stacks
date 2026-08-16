@@ -22,19 +22,19 @@ services:
       - RUSTFS_KMS_VAULT_MOUNT_PATH=transit
       - RUSTFS_KMS_DEFAULT_KEY_ID=${RUSTFS_KMS_DEFAULT_KEY_ID}
       # Configure Keycloak as an OpenID Connect identity provider
-      - RUSTFS_BROWSER_REDIRECT_URL="https://rustfs.club012.com"
+      - RUSTFS_BROWSER_REDIRECT_URL=https://rustfs.club012.com
       - RUSTFS_IDENTITY_OPENID_ENABLE=on
-      - RUSTFS_IDENTITY_OPENID_CONFIG_URL="https://keycloak.club012.com/realms/devops"
+      - RUSTFS_IDENTITY_OPENID_CONFIG_URL=https://keycloak.club012.com/realms/devops
       - RUSTFS_IDENTITY_OPENID_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
       - RUSTFS_IDENTITY_OPENID_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
-      - RUSTFS_IDENTITY_OPENID_SCOPES="openid,profile,email"
-      - RUSTFS_IDENTITY_OPENID_REDIRECT_URI="https://rustfs.clib012.com/rustfs/admin/v3/oidc/callback/default"
+      - RUSTFS_IDENTITY_OPENID_SCOPES=openid,profile,email
+      - RUSTFS_IDENTITY_OPENID_REDIRECT_URI=https://rustfs.clib012.com/rustfs/admin/v3/oidc/callback/default
       - RUSTFS_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC=off
-      - RUSTFS_IDENTITY_OPENID_DISPLAY_NAME="Keycloak"
-      - RUSTFS_IDENTITY_OPENID_GROUPS_CLAIM="groups"
-      - RUSTFS_IDENTITY_OPENID_ROLES_CLAIM="roles"
-      - RUSTFS_IDENTITY_OPENID_EMAIL_CLAIM="email"
-      - RUSTFS_IDENTITY_OPENID_USERNAME_CLAIM="preferred_username"
+      - RUSTFS_IDENTITY_OPENID_DISPLAY_NAME=Keycloak
+      - RUSTFS_IDENTITY_OPENID_GROUPS_CLAIM=groups
+      - RUSTFS_IDENTITY_OPENID_ROLES_CLAIM=roles
+      - RUSTFS_IDENTITY_OPENID_EMAIL_CLAIM=email
+      - RUSTFS_IDENTITY_OPENID_USERNAME_CLAIM=preferred_username
     volumes:
       - ./data:/data
       - ./logs:/logs
