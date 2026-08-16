@@ -35,6 +35,8 @@ services:
       - RUSTFS_IDENTITY_OPENID_ROLES_CLAIM=roles
       - RUSTFS_IDENTITY_OPENID_EMAIL_CLAIM=email
       - RUSTFS_IDENTITY_OPENID_USERNAME_CLAIM=preferred_username
+      - RUSTFS_IDENTITY_OPENID_CLAIM_NAME=groups  # Keycloak 매퍼의 Token Claim Name과 일치
+
     volumes:
       - ./data:/data
       - ./logs:/logs
