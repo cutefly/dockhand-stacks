@@ -28,7 +28,7 @@ services:
       - RUSTFS_IDENTITY_OPENID_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
       - RUSTFS_IDENTITY_OPENID_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
       - RUSTFS_IDENTITY_OPENID_SCOPES=openid,profile,email
-      - RUSTFS_IDENTITY_OPENID_REDIRECT_URI=https://rustfs.clib012.com/rustfs/admin/v3/oidc/callback/default
+      - RUSTFS_IDENTITY_OPENID_REDIRECT_URI=https://rustfs.club012.com/rustfs/admin/v3/oidc/callback/default
       - RUSTFS_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC=off
       - RUSTFS_IDENTITY_OPENID_DISPLAY_NAME=Keycloak
       - RUSTFS_IDENTITY_OPENID_GROUPS_CLAIM=groups
