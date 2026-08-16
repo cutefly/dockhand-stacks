@@ -2,7 +2,7 @@
 services:
   rustfs-master:
     image: rustfs/rustfs:latest # 사용 중인 공식/커스텀 rustfs 이미지 지정
-    container_name: rustfs-master
+    container_name: rustfs
     restart: always
     ports:
       - "9000:9000"   # API Port
