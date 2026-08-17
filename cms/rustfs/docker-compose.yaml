@@ -15,7 +15,7 @@ services:
       - RUSTFS_SSE_S3_MASTER_KEY=${RUSTFS_SSE_S3_MASTER_KEY}
       - RUSTFS_SSE_AUTO_ENCRYPT=true
       # Configure Vault Transit
-      - RUSTFS_KMS_ENABLE=true
+      - RUSTFS_KMS_ENABLE=${RUSTFS_KMS_ENABLE:-false}
       - RUSTFS_KMS_BACKEND=vault-transit
       - RUSTFS_KMS_VAULT_ADDRESS=${VAULT_ADDR}
       - RUSTFS_KMS_VAULT_TOKEN=${VAULT_TOKEN}
