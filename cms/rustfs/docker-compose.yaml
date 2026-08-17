@@ -1,7 +1,7 @@
 # docker compose up -d
 services:
-  rustfs-master:
-    image: rustfs/rustfs:latest # 사용 중인 공식/커스텀 rustfs 이미지 지정
+  rustfs:
+    image: rustfs/rustfs:${DOCKER_IMAGE_TAG:-latest}
     container_name: rustfs
     restart: always
     ports:
@@ -35,7 +35,9 @@ services:
       - RUSTFS_IDENTITY_OPENID_ROLES_CLAIM=roles
       - RUSTFS_IDENTITY_OPENID_EMAIL_CLAIM=email
       - RUSTFS_IDENTITY_OPENID_USERNAME_CLAIM=preferred_username
-      - RUSTFS_IDENTITY_OPENID_CLAIM_NAME=groups  # Keycloak 매퍼의 Token Claim Name과 일치
+      #- RUSTFS_IDENTITY_OPENID_CLAIM_NAME=policy  # Keycloak 매퍼의 Token Claim Name과 일치
+      #- RUSTFS_IDENTITY_OPENID_CLAIM_USERINFO=on
+      #- RUSTFS_BROWSER_LOGIN_CLAIM=preferred_username
 
     volumes:
       - ./data:/data

@@ -103,3 +103,27 @@ KMS Key ID: rustfs-default-key
 rc bucket encryption clear minio1/vault-sse-kms
 ```
 
+## Keycloak을 이용한 OIDC 연동
+
+```
+keycloak에 rustfs client를 생성
+Valid redirect URIs
+- https://rustfs.club012.com/rustfs/admin/v3/oidc/callback/default
+- https://rustfs.club012.com/rustfs/console/auth/login
+Client scopes에 groups 추가(rustfs-dedicated도 가능)
+```
+
+### 권한매핑
+
+```
+keycloak에 groups나 policy claim을 이용하여 rustfs의 policy와 매핑하는 방법이 있으나
+group이나 policy의 값이 rustfs의 policy에 정의되어 있지 않으면 오류 발생
+환경변수 설정 시 Keycloak 매퍼의 Token Claim Name과 일치
+RUSTFS_IDENTITY_OPENID_CLAIM_NAME=groups
+RUSTFS_IDENTITY_OPENID_CLAIM_NAME=policy # policy attribute mapper를 추가 필요
+
+rustfs에 group을 추가하고 policy를 설정하고, keycloak의 groups과 매핑하는 방법이 효율적임.
+(별도의 속성을 추가하지 않아도 무방)
+사전에 rustfs에 group을 추가하고 정책을 할당함.
+예) jenkins-admin 그룹에 consoleAdmin 권한 할당
+```
