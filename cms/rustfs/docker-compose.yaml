@@ -8,8 +8,8 @@ services:
       - "9000:9000"   # API Port
       - "9001:9001"   # Console / Management Port
     environment:
-      - RUSTFS_ROOT_USER=${RUSTFS_ROOT_USER:-admin}
-      - RUSTFS_ROOT_PASSWORD=${RUSTFS_ROOT_PASSWORD}
+      - RUSTFS_ACCESS_KEY=${RUSTFS_ACCESS_KEY:-admin}
+      - RUSTFS_SECRET_KEY=${RUSTFS_SECRET_KEY}
       # 저장 시 암호화(SSE) Master Key 설정 (32byte Base64 또는 Hex)
       - RUSTFS_KMS_MASTER_KEY=${RUSTFS_KMS_MASTER_KEY}
       - RUSTFS_SSE_S3_MASTER_KEY=${RUSTFS_SSE_S3_MASTER_KEY}
