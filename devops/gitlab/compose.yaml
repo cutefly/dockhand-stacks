@@ -41,6 +41,7 @@ services:
         gitlab_rails['omniauth_enabled'] = true
         gitlab_rails['omniauth_allow_single_sign_on'] = ['openid_connect']
         gitlab_rails['omniauth_block_auto_created_users'] = false # 최초 로그인 시 계정 자동 생성 허용
+        gitlab_rails['omniauth_auto_link_ldap_user'] = true # LDAP 계정과 GitLab 계정 자동 연동
         gitlab_rails['omniauth_auto_link_saml_user'] = false
         gitlab_rails['omniauth_auto_link_openid_connect_user'] = true # 이메일이 일치하면 기존 GitLab 계정과 자동 연동
         
