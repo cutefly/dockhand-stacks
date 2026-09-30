@@ -13,6 +13,12 @@ services:
       - "3306:3306"                       # 호스트:컨테이너 포트 맵핑
     volumes:
       - mysql_data:/var/lib/mysql         # 데이터 영속화
-
+    networks:
+      - mysql
 volumes:
   mysql_data:                             # 볼륨 설정
+
+networks:
+  mysql:                                  # 네트워크 설정
+    external: true
+      

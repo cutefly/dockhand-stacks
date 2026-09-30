@@ -11,6 +11,12 @@ services:
       # POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       # POSTGRES_DB: postgres
+    networks:
+      - postgres
       
 volumes:
   postgres_data:
+
+networks:
+  postgres:
+    external: true
