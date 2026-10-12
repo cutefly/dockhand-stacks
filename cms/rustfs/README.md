@@ -42,6 +42,10 @@ sudo mv rc /usr/local/bin/
 rc alias set minio1 https://s3.club012.com admin '${RUSTFS_ROOT_PASSWORD}'
 rc alias set minio2 https://s3-replica.club012.com admin '${RUSTFS_ROOT_PASSWORD}'
 rc alias list
+
+
+rc admin service-account create minio1 s4miqJiRVhEqRb0fdKRF Ivx7bTD94vlZaDpQXJtSlfO2KlJqcZvbFHPMcodG
+
 ```
 
 ## encryption
