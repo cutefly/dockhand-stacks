@@ -28,3 +28,23 @@ Keycloak Admin Console ➔ Clients ➔ 생성한 gitlab 클라이언트
 Valid post logout redirect URIs
 https://gitlab.club012.com/*
 ```
+
+## upgrade path
+
+```
+16.11.5
+16.11.10
+17.1.8
+17.3.7
+17.5.5
+17.8.7
+17.11.7
+18.2.8
+18.5.7
+18.8.11
+18.11.11
+# update 2026.10.12
+18.11.12
+19.2.7
+19.3.3
+```
